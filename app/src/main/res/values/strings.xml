@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lotto Mania</string>
+    <string name="main_button_text">Click Me!</string>
+    <string name="beacons">Beacons</string>
+</resources>
