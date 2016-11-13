@@ -21,20 +21,38 @@ public class LottoResults {
     private Map<Date, LottoResult> lottoResults = new HashMap<>();
 
     public LottoResults(List<LottoResult> results) {
-        for(LottoResult result : results) {
+        for (LottoResult result : results) {
             String drawDate = result.getDrawDate();
-            DateFormat format = new SimpleDateFormat("E, MMM d, yyyy", Locale.CANADA);
-            try {
-                Date date = format.parse(drawDate);
-                lottoResults.put(date,result);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            Date formattedDate = getFormattedDate(drawDate);
+            if (formattedDate != null) {
+                lottoResults.put(formattedDate, result);
             }
+        }
+    }
+
+    @Nullable
+    private Date getFormattedDate(String drawDate) {
+        try {
+            DateFormat format = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault());
+            return format.parse(drawDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Nullable
     public LottoResult getResult(Date date) {
         return lottoResults.get(date);
+    }
+
+    public LottoResult getResult(int year, int month, int day) {
+        // Gregorian calendar months start from 0 to 11
+        GregorianCalendar calendar = new GregorianCalendar(year, month - 1, day);
+        return getResult(calendar.getTime());
+    }
+
+    public int getItemCount() {
+        return lottoResults.size();
     }
 }
