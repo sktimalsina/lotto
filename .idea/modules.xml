@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LottoApp.iml" filepath="$PROJECT_DIR$/LottoApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lotto.iml" filepath="$PROJECT_DIR$/lotto.iml" />
     </modules>
   </component>
 </project>
