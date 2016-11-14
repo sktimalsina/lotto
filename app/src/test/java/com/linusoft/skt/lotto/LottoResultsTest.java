@@ -1,23 +1,13 @@
 package com.linusoft.skt.lotto;
 
-import android.os.Looper;
-import android.test.mock.MockContext;
-
 import com.linusoft.skt.lotto.utils.LottoResult;
 import com.linusoft.skt.lotto.utils.LottoResults;
-import com.linusoft.skt.lotto.utils.ResultParser;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -32,7 +22,8 @@ public class LottoResultsTest {
         List<LottoResult> resultList = new ArrayList<>();
         resultList.add(new LottoResult(1, 2, 3, 4, 5, 6, 7, "Wed, Nov 9, 2016"));
         resultList.add(new LottoResult(11, 12, 13, 14, 15, 16, 17, "Thu, Nov 10, 2016"));
-        lottoResults = new LottoResults(resultList);
+        lottoResults = LottoResults.getInstance();
+        lottoResults.setData(resultList);
     }
 
     @Test
