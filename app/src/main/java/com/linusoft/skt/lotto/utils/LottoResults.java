@@ -36,6 +36,7 @@ public class LottoResults {
                 lottoResults.put(formattedDate, result);
             }
         }
+        generatePositionalData();
     }
 
     public static LottoResults getInstance() {
@@ -68,20 +69,20 @@ public class LottoResults {
         return lottoResults.size();
     }
 
-    public SparseIntArray getTopTenNumbersDrawnByPosition() {
-        SparseIntArray frequencyCount = new SparseIntArray();
-        for (int i = 0; i < 6; i++) {
+    public int[][] getTopTenNumbersDrawnByPosition() {
+        int topTen[][] = new int[6][10];
+        for (int j = 0; j < 6; j++) {
+            topTen[j] = positionData[j].getSortedFrequencyCount(10);
         }
-        return frequencyCount;
+        return topTen;
     }
 
     public void generatePositionalData() {
         for (int i = 0; i < 6; i++) {
-            SparseIntArray positionFrequencyCount = new SparseIntArray(50);
+            SparseIntArray positionFrequencyCount = new SparseIntArray(49);
             for (LottoResult result : rawResults) {
                 int winningNumber = result.getWinningNumbers().get(i);
-                int count = positionFrequencyCount.get(winningNumber) + 1;
-                positionFrequencyCount.put(winningNumber, count);
+                positionFrequencyCount.put(winningNumber, positionFrequencyCount.get(winningNumber) + 1);
             }
             positionData[i] = new PositionData(i);
             positionData[i].setFrequencyCount(positionFrequencyCount);
@@ -90,29 +91,29 @@ public class LottoResults {
 
     private class PositionData {
         int positionNumber;
-        SparseIntArray frequencyCount = new SparseIntArray(49);
+        SparseIntArray frequencyCount = new SparseIntArray();
 
         PositionData(int positionNumber) {
             this.positionNumber = positionNumber;
         }
 
-        public void setFrequencyCount(int winningNumber, int frequency) {
-            frequencyCount.put(winningNumber, frequency);
-        }
-
-        public SparseIntArray getFrequencyCount() {
+        SparseIntArray getFrequencyCount() {
             return frequencyCount;
         }
 
-        public int getPositionNumber() {
-            return positionNumber;
+        void setFrequencyCount(SparseIntArray positionFrequencyCount) {
+            for (int i = 1; i < 49; i++) {
+                frequencyCount.put(positionFrequencyCount.get(i), i);
+            }
         }
 
-        public void setFrequencyCount(SparseIntArray positionFrequencyCount) {
-            //swap SparseIntArray to get sorted vals
-            for (int i =0; i < positionFrequencyCount.size(); i++) {
-                this.frequencyCount.put(positionFrequencyCount.get(i), i);
+        public int[] getSortedFrequencyCount(int depth) {
+            int totalNumbers = frequencyCount.size();
+            int sortedFrequency[] = new int[depth];
+            for (int i = 0; i < depth; i++) {
+                sortedFrequency[i] = frequencyCount.valueAt(totalNumbers - i - 1);
             }
+            return sortedFrequency;
         }
 
     }
