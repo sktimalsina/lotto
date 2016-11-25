@@ -1,6 +1,12 @@
 package com.linusoft.skt.lotto.utils;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by sunil on 2016-11-11.
@@ -90,5 +96,15 @@ public  class LottoResult {
 
     public void setDrawDate(String drawDate) {
         this.drawDate = drawDate;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "%s, %d", getWinningNumbers().toString(), getNum_bonus());
+    }
+
+    @NonNull
+    public List<Integer> getWinningNumbers() {
+        return Arrays.asList(num_1, num_2,num_3, num_4, num_5, num_6);
     }
 }

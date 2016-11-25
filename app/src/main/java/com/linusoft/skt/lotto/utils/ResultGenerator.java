@@ -19,14 +19,14 @@ import java.util.List;
  * Created by sktim on 11/12/2016.
  */
 
-public class ResultParser {
-    public LottoResults generateResult(Context context) {
+public class ResultGenerator {
+    public void generateResult(Context context) {
         InputStream raw = context.getResources().openRawResource(R.raw.lotto649results);
         Reader reader = new BufferedReader(new InputStreamReader(raw));
         Gson gson = new GsonBuilder().create();
         Type collectionType = new TypeToken<Collection<LottoResult>>(){}.getType();
         List<LottoResult> results = gson.fromJson(reader, collectionType);
-        return new LottoResults(results);
+        LottoResults.getInstance().setData(results);
     }
 }
 

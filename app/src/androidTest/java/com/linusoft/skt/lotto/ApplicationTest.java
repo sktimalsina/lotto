@@ -5,9 +5,9 @@ import android.test.ApplicationTestCase;
 
 import com.linusoft.skt.lotto.utils.LottoResult;
 import com.linusoft.skt.lotto.utils.LottoResults;
-import com.linusoft.skt.lotto.utils.ResultParser;
+import com.linusoft.skt.lotto.utils.ResultGenerator;
 
-import java.util.Date;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 /**
@@ -18,18 +18,22 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
-    private LottoResults sut;
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        ResultParser resultParser = new ResultParser();
-        sut = resultParser.generateResult(getSystemContext());
+        ResultGenerator resultGenerator = new ResultGenerator();
+        resultGenerator.generateResult(getSystemContext());
     }
 
     public void testLottoResultGivenDateReturnsResult() {
-       LottoResult lottoResult = sut.getResult(new GregorianCalendar(2016, 11, 9).getTime());
-        assertNull(lottoResult);
+        LottoResult lottoResult = LottoResults.getInstance().getResult(new GregorianCalendar(2016, 10, 9).getTime());
+        assertNotNull(lottoResult);
         assertEquals(lottoResult.toString(), "[6, 9, 30, 37, 43, 49], 18");
     }
+
+    public void testLottoResultGivesTopTenNumbersByPosition() {
+        assertEquals("[[1, 2, 4, 3, 5, 7, 6, 9, 8, 10], [12, 8, 10, 9, 15, 13, 14, 11, 17, 6], [22, 23, 20, 25, 21, 24, 17, 18, 16, 26], [31, 27, 34, 33, 32, 26, 28, 30, 29, 25], [38, 40, 41, 43, 37, 34, 39, 42, 35, 36], [47, 48, 46, 45, 44, 43, 42, 41, 40, 39]]",
+                Arrays.deepToString(LottoResults.getInstance().getTopTenNumbersDrawnByPosition()));
+    }
+
 }
