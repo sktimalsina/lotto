@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Lotto Mania</string>
-    <string name="main_button_text">Click Me!</string>
-    <string name="beacons">Beacons</string>
+    <string name="generate_lotto_numbers">Generate</string>
+    <string name="number_of_tickets">Number of Tickets :</string>
+    <string name="balance_odd_even">Balance Odd/Even</string>
+    <string name="check_prime">Check Prime</string>
+    <string name="include_last_draw">Include last draw</string>
+    <string name="include_top_ten_pick">Include top picks so far</string>
+    <string name="check_sum">Check sum (120~200)</string>
 </resources>

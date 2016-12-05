@@ -1,8 +1,11 @@
 package com.linusoft.skt.lotto;
 
+import android.util.SparseIntArray;
+
 import com.linusoft.skt.lotto.utils.LottoResult;
 import com.linusoft.skt.lotto.utils.LottoResults;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -7,6 +7,7 @@ import android.util.SparseIntArray;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class LottoResults {
     private Map<Date, LottoResult> lottoResults = new HashMap<>();
     private static List<LottoResult> rawResults;
     private static PositionData[] positionData = new PositionData[6];
+    private static int[] topTenNumbersDrawnSoFar;
 
     private LottoResults() {
     }
@@ -37,6 +39,7 @@ public class LottoResults {
             }
         }
         generatePositionalData();
+        generateTopTenNumbersDrawnSoFar();
     }
 
     public static LottoResults getInstance() {
@@ -87,6 +90,24 @@ public class LottoResults {
             positionData[i] = new PositionData(i);
             positionData[i].setFrequencyCount(positionFrequencyCount);
         }
+    }
+    private void generateTopTenNumbersDrawnSoFar() {
+        SparseIntArray topNumbers = new SparseIntArray(49);
+        for (LottoResult result : rawResults) {
+            List<Integer> winningNumbers = result.getWinningNumbers();
+            for (int i = 0; i < winningNumbers.size(); i++) {
+                Integer currentNumber = winningNumbers.get(i);
+                int currentCount = topNumbers.get(currentNumber);
+                topNumbers.put(currentNumber, currentCount + 1);
+            }
+        }
+        PositionData numbers = new PositionData(0);
+        numbers.setFrequencyCount(topNumbers);
+        topTenNumbersDrawnSoFar = numbers.getSortedFrequencyCount(10);
+    }
+
+    public int[] getTopTenNumbersDrawnSoFar() {
+        return topTenNumbersDrawnSoFar;
     }
 
     private class PositionData {
